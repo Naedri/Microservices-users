@@ -1,0 +1,81 @@
+{
+  "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+  "sourceRoot": "apps/ms-users/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/ms-users",
+        "index": "apps/ms-users/src/index.html",
+        "baseHref": "/",
+        "main": "apps/ms-users/src/main.tsx",
+        "polyfills": "apps/ms-users/src/polyfills.ts",
+        "tsConfig": "apps/ms-users/tsconfig.app.json",
+        "assets": ["apps/ms-users/src/favicon.ico", "apps/ms-users/src/assets"],
+        "styles": ["apps/ms-users/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/ms-users/src/environments/environment.ts",
+              "with": "apps/ms-users/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "ms-users:build",
+        "hmr": true,
+        "proxyConfig": "apps/ms-users/proxy.conf.json"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "ms-users:build:development"
+        },
+        "production": {
+          "buildTarget": "ms-users:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/ms-users/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/ms-users"],
+      "options": {
+        "jestConfig": "apps/ms-users/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
